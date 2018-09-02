@@ -1,0 +1,4476 @@
+
+$clock_spacing: 1%;
+$couples_spacing: 4%; 
+$clock_frame_color: rgba(255,255,255,.1);
+$cock_frame_background: rgba(255,255,255,.05);
+$clock_hands_color: #000;
+$clock_hands_width: .3rem;
+$clock_pin_color: #000;
+$clock_easing_hours: ease-in-out; 
+$clock_easing_minutes:  cubic-bezier(0.4, 0, 0.2, 1);
+$clock_refreshInterval: 25s;
+
+%deg-0 {
+  transform: translate(-50%,-100%) rotate(0deg);   
+}
+%deg-0-reverse { 
+  transform: translate(-50%,-100%) rotate(-0deg);    
+}
+%deg-0-reverse {
+  transform: translate(-50%,-100%) rotate(360deg);    
+}
+
+
+%deg-45 {
+  transform: translate(-50%,-100%) rotate(45deg); 
+}
+%deg-45-reverse {
+  transform: translate(-50%,-100%) rotate(-315deg);    
+} 
+%deg-45-reverse { 
+  transform: translate(-50%,-100%) rotate(405deg);    
+} 
+
+%deg-90 {
+  transform: translate(-50%,-100%) rotate(90deg);  
+}
+%deg-90-reverse {
+  transform: translate(-50%,-100%) rotate(-270deg);    
+} 
+%deg-90-reverse { 
+  transform: translate(-50%,-100%) rotate(450deg);    
+} 
+
+%deg-135 {
+  transform: translate(-50%,-100%) rotate(135deg);   
+}
+%deg-135-reverse {
+  transform: translate(-50%,-100%) rotate(-225deg);    
+}  
+%deg-135-reverse {  
+  transform: translate(-50%,-100%) rotate(495deg);    
+}  
+
+
+%deg-180 {
+  transform: translate(-50%,-100%) rotate(180deg);  
+}
+%deg-180-reverse {
+  transform: translate(-50%,-100%) rotate(-180deg);    
+}
+%deg-180-reverse {
+  transform: translate(-50%,-100%) rotate(540deg);    
+}
+
+
+%deg-225 { 
+  transform: translate(-50%,-100%) rotate(225deg);     
+}
+%deg-225-reverse {
+  transform: translate(-50%,-100%) rotate(-135deg);    
+} 
+%deg-225-reverse { 
+  transform: translate(-50%,-100%) rotate(585deg);    
+} 
+
+%deg-270 { 
+  transform: translate(-50%,-100%) rotate(270deg);      
+}
+%deg-270-reverse {
+  transform: translate(-50%,-100%) rotate(-90deg);    
+} 
+%deg-270-reverse {
+  transform: translate(-50%,-100%) rotate(630deg);    
+} 
+
+%deg-315 {
+  transform: translate(-50%,-100%) rotate(315deg);  
+}
+%deg-315-reverse { 
+  transform: translate(-50%,-100%) rotate(-45deg);    
+} 
+%deg-315-reverse { 
+  transform: translate(-50%,-100%) rotate(675deg);    
+} 
+
+
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+html {
+  font: 62.5%/1em sans-serif;
+  background: #FFF;
+}
+
+#clock {
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  
+  @media (orientation:portrait) {    
+    flex-wrap: wrap;
+    max-width: 50vh;
+  }  
+  
+  * {
+    box-sizing: border-box;
+  }  
+
+  .digit {
+    
+    display: inline-block;
+    flex: 0 0 20%;
+    max-width: 70vh; 
+    
+  }
+
+  @media (orientation:portrait) {  
+    .digit {
+      flex: 0 0 20vh;   
+    }
+    .digit:nth-child(1),
+    .digit:nth-child(2){
+      align-self: flex-end;
+    }
+    .digit:nth-child(3),
+    .digit:nth-child(4){
+       align-self: flex-start;
+    }    
+  }    
+  
+  .pixel_row {
+    display: flex;
+    justify-content: center;
+  }
+
+    
+  .digit:nth-child(odd) .pixel_row {
+    justify-content: flex-end;
+  }
+
+  .digit:nth-child(even) .pixel_row {
+    justify-content: flex-start;
+  }
+
+  .digit:nth-child(even) {
+    margin-right: $couples_spacing;
+  }  
+  .digit:nth-child(even):last-child { 
+    margin-right: 0;
+  }
+  
+  
+  @media (orientation:portrait) {
+    .digit {
+      margin-right: 0;
+      margin-top: 2vh;      
+    }  
+
+  }
+
+  
+  .pixel_col {
+    display: flex;
+    flex: 0 0 25%;
+    padding: $clock_spacing;
+    max-width: 15vh;
+    min-width: 2.5rem;
+  }
+  
+  .pixel {
+    position: relative;
+    width: 100%;
+
+    &:after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      width: .4rem;
+      height: .4rem;
+      background: $clock_pin_color;
+      border-radius: 100%;
+    }
+    
+    &:before {
+      content: "";
+      display: block;
+      height: 0;
+      padding-bottom: 100%;
+      box-shadow: inset 0 0 0 1px $clock_frame_color,  
+        inset 0.2rem 0.3rem 0.2rem rgba(0, 0, 0, 0.15), 
+        0.2rem 0.3rem 0.5rem rgba(0, 0, 0, 0.25);
+      border-radius: 100%;
+      background: $cock_frame_background;
+    }  
+    
+  }
+  
+  .line {
+    position: absolute;
+    display: block;
+    width: $clock_hands_width;
+    height: 46%;
+    background: $clock_hands_color;
+    top: 50%;
+    left: 50%;
+    transform-origin: center bottom;
+    transition: transform $clock_refreshInterval $clock_easing_minutes 0s;
+    border-radius: 2rem;   
+    @extend %deg-225;
+  }
+
+  .hours.line {
+    height: 30%;
+    transition: transform $clock_refreshInterval $clock_easing_hours 0s; 
+  }
+
+  
+  /* --- - --- */
+  [display="-"] {
+    .hours {
+      @extend %deg-0;
+    }
+    .minutes {
+      @extend %deg-0-reverse;
+    }
+  }
+  
+  /* --- 0 --- */
+  [display="0"] {
+
+    [row="1"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-180-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }      
+    }
+
+    [row="2"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-180-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }      
+    }
+
+    [row="3"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }      
+    }
+
+    [row="4"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }      
+    }
+
+    [row="5"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-0;
+        }
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }      
+    }
+
+    [row="6"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-0;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }      
+    }  
+
+  }
+
+  /* --- 1 --- */
+  [display="1"] {
+
+    [row="1"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-270-reverse;
+        }
+        .minutes {
+          @extend %deg-90;
+        } 
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-270-reverse;
+        }      
+        .minutes {
+          @extend %deg-180;
+        } 
+      }    
+    } 
+
+    [row="2"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-0-reverse;
+        } 
+        .minutes {
+          @extend %deg-90;
+        }      
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-270-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        } 
+      }    
+      [col="3"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }       
+      }
+    }
+
+    [row="3"] {
+      [col="2"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        } 
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        } 
+      }
+    } 
+
+    [row="4"] {
+      [col="2"] {
+        .hours {
+          @extend %deg-0-reverse;
+        } 
+        .minutes {
+          @extend %deg-180;
+        } 
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        } 
+      }
+    } 
+
+    [row="5"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-180-reverse;
+        }
+        .minutes {
+          @extend %deg-90;
+        }
+      }    
+      [col="2"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }  
+        .minutes {
+          @extend %deg-90;
+        }
+      }
+      [col="4"] {
+        .hours {
+          @extend %deg-180-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }
+    } 
+
+    [row="6"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-90;
+        }       
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-270-reverse;
+        }
+        .minutes {
+          @extend %deg-90;
+        }       
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-270-reverse;
+        }
+        .minutes {
+          @extend %deg-90;
+        }       
+      }    
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }
+    }
+  }
+
+  /* --- 2 --- */
+  [display="2"] {
+
+    [row="1"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-180-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }      
+    } 
+
+    [row="2"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-0;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-180-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        } 
+      }     
+    }
+
+    [row="3"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }  
+      }   
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }  
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }      
+        .minutes {
+          @extend %deg-180;
+        }
+      }    
+    } 
+
+    [row="4"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        } 
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270-reverse;
+        } 
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }      
+    }
+
+    [row="5"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }    
+      [col="2"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-90;
+        }
+      }
+      [col="3"] {   
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }
+      [col="4"] {
+        .hours {
+          @extend %deg-180-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }
+    } 
+
+    [row="6"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-90;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }    
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }
+    }
+
+  }
+
+  /* --- 3 --- */
+  [display="3"] {
+
+    [row="1"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-180-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }      
+    }
+
+    [row="2"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-90;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-180-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }      
+    }
+
+    [row="3"] {
+      [col="1"] {
+        .hours {
+
+        }
+        .minutes {
+
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-225;
+        }
+      }      
+    }
+
+    [row="4"] {
+      [col="1"] {
+        .hours {
+
+        }
+        .minutes {
+
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-90;
+        }
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-180-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }   
+      [col="4"] {
+        .hours {
+          @extend %deg-315;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }      
+    }
+
+    [row="5"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }      
+    }
+
+    [row="6"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-0;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-90;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }      
+    }  
+
+  }
+
+  /* --- 4 --- */
+  [display="4"] {
+
+    [row="1"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-180-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        } 
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-180-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }      
+    } 
+
+    [row="2"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        } 
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-180-reverse;
+        }
+        .minutes {
+          @extend %deg-0;
+        } 
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        } 
+      }     
+    }
+
+    [row="3"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }  
+      }   
+      [col="2"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-90;
+        }  
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }      
+        .minutes {
+          @extend %deg-180;
+        }
+      }    
+    } 
+
+    [row="4"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-90;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-180;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        } 
+      }      
+    }
+
+    [row="5"] {
+      [col="1"] {
+        .hours {
+
+        }
+        .minutes {
+
+        }
+      }    
+      [col="2"] {
+        .hours {
+
+        }
+        .minutes {
+
+        }
+      }
+      [col="3"] {   
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }
+      [col="4"] {
+        .hours {
+          @extend %deg-180-reverse;
+        }
+        .minutes {
+          @extend %deg-0;
+        }
+      }
+    } 
+
+    [row="6"] {
+      [col="1"] {
+        .hours {
+
+        }
+        .minutes {
+
+        }
+      }
+      [col="2"] {
+        .hours {
+
+        }
+        .minutes {
+
+        }
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-90;
+        }
+      }    
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }
+    }
+
+  }
+
+  /* --- 5 --- */
+  [display="5"] {
+
+    [row="1"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-180-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }      
+    } 
+
+    [row="2"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        } 
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }     
+    }
+
+    [row="3"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }  
+      }   
+      [col="2"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-90;
+        }  
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }
+      [col="4"] {
+        .hours {
+          @extend %deg-180-reverse;
+        }      
+        .minutes {
+          @extend %deg-270;
+        }
+      }    
+    } 
+
+    [row="4"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-90;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-180-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        } 
+      }      
+    }
+
+    [row="5"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }    
+      [col="2"] {
+        .hours {
+          @extend %deg-270-reverse;
+        }
+        .minutes {
+          @extend %deg-90;
+        }
+      }
+      [col="3"] {   
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }
+      [col="4"] {
+        .hours {
+          @extend %deg-180-reverse;
+        }
+        .minutes {
+          @extend %deg-0;
+        }
+      }
+    } 
+
+    [row="6"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-90;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }    
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }
+    }
+
+  }
+
+  /* --- 6 --- */
+  [display="6"] {
+
+    [row="1"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-180-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }      
+    } 
+
+    [row="2"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        } 
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }     
+    }
+
+    [row="3"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }  
+      }   
+      [col="2"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-90;
+        }  
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }
+      [col="4"] {
+        .hours {
+          @extend %deg-180-reverse;
+        }      
+        .minutes {
+          @extend %deg-270;
+        }
+      }    
+    } 
+
+    [row="4"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        } 
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-180-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        } 
+      }      
+    }
+
+    [row="5"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }    
+      [col="2"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-90;
+        }
+      }
+      [col="3"] {   
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }
+      [col="4"] {
+        .hours {
+          @extend %deg-180-reverse;
+        }
+        .minutes {
+          @extend %deg-0;
+        }
+      }
+    } 
+
+    [row="6"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-90;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }    
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }
+    }
+
+  }
+
+  /* --- 7 --- */
+  [display="7"] {
+
+    [row="1"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-180-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }      
+    } 
+
+    [row="2"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-90;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-180-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        } 
+      }     
+    }
+
+    [row="3"] {
+      [col="1"] {
+        .hours {
+
+        }
+        .minutes {
+
+        }  
+      }   
+      [col="2"] {
+        .hours {
+
+        }
+        .minutes {
+
+        }  
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-225;
+        } 
+      }
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }      
+        .minutes {
+          @extend %deg-225;
+        }
+      }    
+    } 
+
+    [row="4"] {
+      [col="1"] {
+        .hours {
+
+        }
+        .minutes {
+
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-45-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        } 
+      }  
+      [col="3"] {
+        .hours {
+          @extend %deg-45-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        } 
+      }   
+      [col="4"] {
+        .hours {
+
+        }
+        .minutes {
+
+        } 
+      }    
+    }
+
+    [row="5"] {
+      [col="1"] {
+        .hours {
+
+        }
+        .minutes {
+
+        }
+      }    
+      [col="2"] {   
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-180-reverse;
+        }
+        .minutes {
+          @extend %deg-0;
+        }
+      }
+      [col="4"] {
+        .hours {
+
+        }
+        .minutes {
+
+        }
+      }    
+    } 
+
+    [row="6"] {
+      [col="1"] {
+        .hours {
+
+        }
+        .minutes {
+
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-90;
+        }
+      }    
+      [col="3"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }
+      [col="4"] {
+        .hours {
+
+        }
+        .minutes {
+
+        }
+      }    
+    }
+
+  }
+
+  /* --- 8 --- */
+  [display="8"] {
+
+    [row="1"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-180-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }      
+    }
+
+    [row="2"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-180-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }      
+    }
+
+    [row="3"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-135;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-0;
+        }
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-225;
+        }
+      }      
+    }
+
+    [row="4"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-45-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-180-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }   
+      [col="4"] {
+        .hours {
+          @extend %deg-315-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }      
+    }
+
+    [row="5"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-0;
+        }
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }      
+    }
+
+    [row="6"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-0;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }      
+    }  
+
+  }
+
+  /* --- 9 --- */
+  [display="9"] {
+
+    [row="1"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-180-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }      
+    } 
+
+    [row="2"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        } 
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-180-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        } 
+      }     
+    }
+
+    [row="3"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }  
+      }   
+      [col="2"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-90;
+        }  
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }      
+        .minutes {
+          @extend %deg-180;
+        }
+      }    
+    } 
+
+    [row="4"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-90;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-180;
+        }
+        .minutes {
+          @extend %deg-270;
+        } 
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        } 
+      }      
+    }
+
+    [row="5"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-180;
+        }
+      }    
+      [col="2"] {
+        .hours {
+          @extend %deg-270-reverse;
+        }
+        .minutes {
+          @extend %deg-90;
+        }
+      }
+      [col="3"] {   
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }
+      [col="4"] {
+        .hours {
+          @extend %deg-180-reverse;
+        }
+        .minutes {
+          @extend %deg-0;
+        }
+      }
+    } 
+
+    [row="6"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-90;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }    
+      [col="4"] {
+        .hours {
+          @extend %deg-0-reverse;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }
+    }
+
+  }
+
+
+  [reverse="true"] {
+
+    .line {
+      @extend %deg-225-reverse;
+    }  
+    
+    /* --- - --- */
+    [display="-"] {
+
+      .hours {
+        @extend %deg-0;
+      }
+      .minutes {
+        @extend %deg-0-reverse;
+      }
+
+    }
+
+
+    /* --- 0 --- */
+    &[display="0"] {
+
+      [row="1"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }  
+        [col="4"] {
+          .hours {
+            @extend %deg-180;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }      
+      }
+
+      [row="2"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-180;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }  
+        [col="4"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }      
+      }
+
+      [row="3"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }  
+        [col="4"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }      
+      }
+
+      [row="4"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }  
+        [col="4"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }      
+      }
+
+      [row="5"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-0-reverse;
+          }
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }  
+        [col="4"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }      
+      }
+
+      [row="6"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-0-reverse;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-90-reverse;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }  
+        [col="4"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }      
+      }  
+
+    }
+
+    /* --- 1 --- */
+    &[display="1"] {
+
+      [row="1"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-270;
+          }
+          .minutes {
+            @extend %deg-90-reverse;
+          } 
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-270;
+          }      
+          .minutes {
+            @extend %deg-180-reverse;
+          } 
+        }    
+      } 
+
+      [row="2"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-0;
+          } 
+          .minutes {
+            @extend %deg-90-reverse;
+          }      
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-270;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          } 
+        }    
+        [col="3"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }       
+        }
+      }
+
+      [row="3"] {
+        [col="2"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          } 
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          } 
+        }
+      } 
+
+      [row="4"] {
+        [col="2"] {
+          .hours {
+            @extend %deg-0;
+          } 
+          .minutes {
+            @extend %deg-180-reverse;
+          } 
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          } 
+        }
+      } 
+
+      [row="5"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-180;
+          }
+          .minutes {
+            @extend %deg-90-reverse;
+          }
+        }    
+        [col="2"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-0;
+          }  
+          .minutes {
+            @extend %deg-90-reverse;
+          }
+        }
+        [col="4"] {
+          .hours {
+            @extend %deg-180;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }
+      } 
+
+      [row="6"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-90-reverse;
+          }       
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-270;
+          }
+          .minutes {
+            @extend %deg-90-reverse;
+          }       
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-270;
+          }
+          .minutes {
+            @extend %deg-90-reverse;
+          }       
+        }    
+        [col="4"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }
+      }
+    }
+
+    /* --- 2 --- */
+    &[display="2"] {
+
+      [row="1"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }  
+        [col="4"] {
+          .hours {
+            @extend %deg-180;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }      
+      } 
+
+      [row="2"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-0-reverse;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-180;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }  
+        [col="4"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          } 
+        }     
+      }
+
+      [row="3"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }  
+        }   
+        [col="2"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }  
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }
+        [col="4"] {
+          .hours {
+            @extend %deg-0;
+          }      
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }    
+      } 
+
+      [row="4"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          } 
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }  
+        [col="4"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }      
+      }
+
+      [row="5"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }    
+        [col="2"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-90-reverse;
+          }
+        }
+        [col="3"] {   
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }
+        [col="4"] {
+          .hours {
+            @extend %deg-180;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }
+      } 
+
+      [row="6"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-90-reverse;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }    
+        [col="4"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }
+      }
+
+    }
+
+    /* --- 3 --- */
+    &[display="3"] {
+
+      [row="1"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }  
+        [col="4"] {
+          .hours {
+            @extend %deg-180;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }      
+      }
+
+    [row="2"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-0;
+        }
+        .minutes {
+          @extend %deg-90-reverse;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90;
+        }
+        .minutes {
+          @extend %deg-270-reverse;
+        }
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-180;
+        }
+        .minutes {
+          @extend %deg-270-reverse;
+        }
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-0;
+        }
+        .minutes {
+          @extend %deg-180-reverse;
+        }
+      }      
+    }
+
+    [row="3"] {
+      [col="1"] {
+        .hours {
+
+        }
+        .minutes {
+
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90;
+        }
+        .minutes {
+          @extend %deg-180-reverse;
+        }
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-0;
+        }
+        .minutes {
+          @extend %deg-270-reverse;
+        }
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-0;
+        }
+        .minutes {
+          @extend %deg-225-reverse;
+        }
+      }      
+    }
+
+    [row="4"] {
+      [col="1"] {
+        .hours {
+
+        }
+        .minutes {
+
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-0;
+        }
+        .minutes {
+          @extend %deg-90-reverse;
+        }
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-180;
+        }
+        .minutes {
+          @extend %deg-270-reverse;
+        }
+      }   
+      [col="4"] {
+        .hours {
+          @extend %deg-315;
+        }
+        .minutes {
+          @extend %deg-180-reverse;
+        }
+      }      
+    }
+
+    [row="5"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-90;
+        }
+        .minutes {
+          @extend %deg-180-reverse;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90;
+        }
+        .minutes {
+          @extend %deg-270-reverse;
+        }
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-0;
+        }
+        .minutes {
+          @extend %deg-270-reverse;
+        }
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-0;
+        }
+        .minutes {
+          @extend %deg-180-reverse;
+        }
+      }      
+    }
+
+    [row="6"] {
+      [col="1"] {
+        .hours {
+          @extend %deg-90;
+        }
+        .minutes {
+          @extend %deg-0-reverse;
+        }
+      }
+      [col="2"] {
+        .hours {
+          @extend %deg-90;
+        }
+        .minutes {
+          @extend %deg-270;
+        }
+      }
+      [col="3"] {
+        .hours {
+          @extend %deg-90-reverse;
+        }
+        .minutes {
+          @extend %deg-270-reverse;
+        }
+      }  
+      [col="4"] {
+        .hours {
+          @extend %deg-0;
+        }
+        .minutes {
+          @extend %deg-270-reverse;
+        }
+      }      
+    }  
+
+  }
+
+    /* --- 4 --- */
+    &[display="4"] {
+
+      [row="1"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-180;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          } 
+        }  
+        [col="4"] {
+          .hours {
+            @extend %deg-180;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }      
+      } 
+
+      [row="2"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          } 
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-180;
+          }
+          .minutes {
+            @extend %deg-0-reverse;
+          } 
+        }  
+        [col="4"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          } 
+        }     
+      }
+
+      [row="3"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }  
+        }   
+        [col="2"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-90-reverse;
+          }  
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }
+        [col="4"] {
+          .hours {
+            @extend %deg-0;
+          }      
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }    
+      } 
+
+      [row="4"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-90-reverse;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-180;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }  
+        [col="4"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          } 
+        }      
+      }
+
+      [row="5"] {
+        [col="1"] {
+          .hours {
+
+          }
+          .minutes {
+
+          }
+        }    
+        [col="2"] {
+          .hours {
+
+          }
+          .minutes {
+
+          }
+        }
+        [col="3"] {   
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }
+        [col="4"] {
+          .hours {
+            @extend %deg-180;
+          }
+          .minutes {
+            @extend %deg-0-reverse;
+          }
+        }
+      } 
+
+      [row="6"] {
+        [col="1"] {
+          .hours {
+
+          }
+          .minutes {
+
+          }
+        }
+        [col="2"] {
+          .hours {
+
+          }
+          .minutes {
+
+          }
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-90-reverse;
+          }
+        }    
+        [col="4"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }
+      }
+
+    }
+
+    /* --- 5 --- */
+    &[display="5"] {
+
+      [row="1"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }
+        [col="3"] {
+          .hours {
+              @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }  
+        [col="4"] {
+          .hours {
+            @extend %deg-180;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }      
+      } 
+
+      [row="2"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          } 
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }  
+        [col="4"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }     
+      }
+
+      [row="3"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }  
+        }   
+        [col="2"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-90-reverse;
+          }  
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }
+        [col="4"] {
+          .hours {
+            @extend %deg-180;
+          }      
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }    
+      } 
+
+      [row="4"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-90-reverse;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-180;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }  
+        [col="4"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180;
+          } 
+        }      
+      }
+
+      [row="5"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-90-reverse;
+          }
+          .minutes {
+            @extend %deg-180;
+          }
+        }    
+        [col="2"] {
+          .hours {
+            @extend %deg-270;
+          }
+          .minutes {
+            @extend %deg-90-reverse;
+          }
+        }
+        [col="3"] {   
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }
+        [col="4"] {
+          .hours {
+            @extend %deg-180;
+          }
+          .minutes {
+            @extend %deg-0-reverse;
+          }
+        }
+      } 
+
+      [row="6"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-90;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }    
+        [col="4"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }
+      }
+
+    }
+
+    /* --- 6 --- */
+    &[display="6"] {
+
+      [row="1"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270;
+          } 
+        }  
+        [col="4"] {
+          .hours {
+            @extend %deg-180-reverse;
+          }
+          .minutes {
+            @extend %deg-270;
+          } 
+        }      
+      } 
+
+      [row="2"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-180;
+          } 
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270;
+          } 
+        }  
+        [col="4"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-270;
+          } 
+        }     
+      }
+
+      [row="3"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }  
+        }   
+        [col="2"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-90-reverse;
+          }  
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270;
+          } 
+        }
+        [col="4"] {
+          .hours {
+            @extend %deg-180;
+          }      
+          .minutes {
+            @extend %deg-270;
+          }
+        }    
+      } 
+
+      [row="4"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-0-reverse;
+          }
+          .minutes {
+            @extend %deg-180;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-90-reverse;
+          }
+          .minutes {
+            @extend %deg-180;
+          } 
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-180-reverse;
+          }
+          .minutes {
+            @extend %deg-270;
+          } 
+        }  
+        [col="4"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180;
+          } 
+        }      
+      }
+
+      [row="5"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-0-reverse;
+          }
+          .minutes {
+            @extend %deg-180;
+          }
+        }    
+        [col="2"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-90-reverse;
+          }
+        }
+        [col="3"] {   
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }
+        [col="4"] {
+          .hours {
+            @extend %deg-180;
+          }
+          .minutes {
+            @extend %deg-0;
+          }
+        }
+      } 
+
+      [row="6"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-90;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-90-reverse;
+          }
+          .minutes {
+            @extend %deg-270;
+          }
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-90-reverse;
+          }
+          .minutes {
+            @extend %deg-270;
+          }
+        }    
+        [col="4"] {
+          .hours {
+            @extend %deg-0-reverse;
+          }
+          .minutes {
+            @extend %deg-270;
+          }
+        }
+      }
+
+    }
+
+    /* --- 7 --- */
+    &[display="7"] {
+
+      [row="1"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }  
+        [col="4"] {
+          .hours {
+            @extend %deg-180;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }      
+      } 
+
+      [row="2"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-90-reverse;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-180;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }  
+        [col="4"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          } 
+        }     
+      }
+
+      [row="3"] {
+        [col="1"] {
+          .hours {
+
+          }
+          .minutes {
+
+          }  
+        }   
+        [col="2"] {
+          .hours {
+
+          }
+          .minutes {
+
+          }  
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-225-reverse;
+          } 
+        }
+        [col="4"] {
+          .hours {
+            @extend %deg-0;
+          }      
+          .minutes {
+            @extend %deg-225-reverse;
+          }
+        }    
+      } 
+
+      [row="4"] {
+        [col="1"] {
+          .hours {
+
+          }
+          .minutes {
+
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-45;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          } 
+        }  
+        [col="3"] {
+          .hours {
+            @extend %deg-45;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          } 
+        }   
+        [col="4"] {
+          .hours {
+
+          }
+          .minutes {
+
+          } 
+        }    
+      }
+
+      [row="5"] {
+        [col="1"] {
+          .hours {
+
+          }
+          .minutes {
+
+          }
+        }    
+        [col="2"] {   
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-180;
+          }
+          .minutes {
+            @extend %deg-0-reverse;
+          }
+        }
+        [col="4"] {
+          .hours {
+
+          }
+          .minutes {
+
+          }
+        }    
+      } 
+
+      [row="6"] {
+        [col="1"] {
+          .hours {
+
+          }
+          .minutes {
+
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-90-reverse;
+          }
+        }    
+        [col="3"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }
+        [col="4"] {
+          .hours {
+
+          }
+          .minutes {
+
+          }
+        }    
+      }
+
+    }
+
+    /* --- 8 --- */
+    &[display="8"] {
+
+      [row="1"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }  
+        [col="4"] {
+          .hours {
+            @extend %deg-180;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }      
+      }
+
+      [row="2"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-90-reverse;
+          }
+          .minutes {
+            @extend %deg-180;
+          }
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-180-reverse;
+          }
+          .minutes {
+            @extend %deg-270;
+          }
+        }  
+        [col="4"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180;
+          }
+        }      
+      }
+
+      [row="3"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-135-reverse;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-0-reverse;
+          }
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }  
+        [col="4"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-225-reverse;
+          }
+        }      
+      }
+
+      [row="4"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-45;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-180;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }   
+        [col="4"] {
+          .hours {
+            @extend %deg-315;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }      
+      }
+
+      [row="5"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-0-reverse;
+          }
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }  
+        [col="4"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }      
+      }
+
+      [row="6"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-0-reverse;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }  
+        [col="4"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }      
+      }  
+
+    }
+
+    /* --- 9 --- */
+    &[display="9"] {
+
+      [row="1"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }  
+        [col="4"] {
+          .hours {
+            @extend %deg-180;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }      
+      } 
+
+      [row="2"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          } 
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-180;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }  
+        [col="4"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          } 
+        }     
+      }
+
+      [row="3"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }  
+        }   
+        [col="2"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-90-reverse;
+          }  
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }
+        [col="4"] {
+          .hours {
+            @extend %deg-0;
+          }      
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }    
+      } 
+
+      [row="4"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-90-reverse;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-180;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          } 
+        }  
+        [col="4"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          } 
+        }      
+      }
+
+      [row="5"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-180-reverse;
+          }
+        }    
+        [col="2"] {
+          .hours {
+            @extend %deg-270;
+          }
+          .minutes {
+            @extend %deg-90-reverse;
+          }
+        }
+        [col="3"] {   
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }
+        [col="4"] {
+          .hours {
+            @extend %deg-180;
+          }
+          .minutes {
+            @extend %deg-0-reverse;
+          }
+        }
+      } 
+
+      [row="6"] {
+        [col="1"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-90-reverse;
+          }
+        }
+        [col="2"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }
+        [col="3"] {
+          .hours {
+            @extend %deg-90;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }    
+        [col="4"] {
+          .hours {
+            @extend %deg-0;
+          }
+          .minutes {
+            @extend %deg-270-reverse;
+          }
+        }
+      }
+
+    }
+
+  }
+
+}
+
+
+
