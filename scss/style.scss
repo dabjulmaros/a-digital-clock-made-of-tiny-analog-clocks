@@ -1,97 +1,97 @@
 
 $clock_spacing: 1%;
-$couples_spacing: 4%; 
+$couples_spacing: 4%;
 $clock_frame_color: rgba(255,255,255,.1);
 $cock_frame_background: rgba(255,255,255,.05);
 $clock_hands_color: #000;
 $clock_hands_width: .3rem;
 $clock_pin_color: #000;
-$clock_easing_hours: ease-in-out; 
+$clock_easing_hours: ease-in-out;
 $clock_easing_minutes:  cubic-bezier(0.4, 0, 0.2, 1);
 $clock_refreshInterval: 25s;
 
 %deg-0 {
-  transform: translate(-50%,-100%) rotate(0deg);   
-}
-%deg-0-reverse { 
-  transform: translate(-50%,-100%) rotate(-0deg);    
+  transform: translate(-50%,-100%) rotate(0deg);
 }
 %deg-0-reverse {
-  transform: translate(-50%,-100%) rotate(360deg);    
+  transform: translate(-50%,-100%) rotate(-0deg);
+}
+%deg-0-reverse {
+  transform: translate(-50%,-100%) rotate(360deg);
 }
 
 
 %deg-45 {
-  transform: translate(-50%,-100%) rotate(45deg); 
+  transform: translate(-50%,-100%) rotate(45deg);
 }
 %deg-45-reverse {
-  transform: translate(-50%,-100%) rotate(-315deg);    
-} 
-%deg-45-reverse { 
-  transform: translate(-50%,-100%) rotate(405deg);    
-} 
+  transform: translate(-50%,-100%) rotate(-315deg);
+}
+%deg-45-reverse {
+  transform: translate(-50%,-100%) rotate(405deg);
+}
 
 %deg-90 {
-  transform: translate(-50%,-100%) rotate(90deg);  
+  transform: translate(-50%,-100%) rotate(90deg);
 }
 %deg-90-reverse {
-  transform: translate(-50%,-100%) rotate(-270deg);    
-} 
-%deg-90-reverse { 
-  transform: translate(-50%,-100%) rotate(450deg);    
-} 
+  transform: translate(-50%,-100%) rotate(-270deg);
+}
+%deg-90-reverse {
+  transform: translate(-50%,-100%) rotate(450deg);
+}
 
 %deg-135 {
-  transform: translate(-50%,-100%) rotate(135deg);   
+  transform: translate(-50%,-100%) rotate(135deg);
 }
 %deg-135-reverse {
-  transform: translate(-50%,-100%) rotate(-225deg);    
-}  
-%deg-135-reverse {  
-  transform: translate(-50%,-100%) rotate(495deg);    
-}  
+  transform: translate(-50%,-100%) rotate(-225deg);
+}
+%deg-135-reverse {
+  transform: translate(-50%,-100%) rotate(495deg);
+}
 
 
 %deg-180 {
-  transform: translate(-50%,-100%) rotate(180deg);  
+  transform: translate(-50%,-100%) rotate(180deg);
 }
 %deg-180-reverse {
-  transform: translate(-50%,-100%) rotate(-180deg);    
+  transform: translate(-50%,-100%) rotate(-180deg);
 }
 %deg-180-reverse {
-  transform: translate(-50%,-100%) rotate(540deg);    
+  transform: translate(-50%,-100%) rotate(540deg);
 }
 
 
-%deg-225 { 
-  transform: translate(-50%,-100%) rotate(225deg);     
+%deg-225 {
+  transform: translate(-50%,-100%) rotate(225deg);
 }
 %deg-225-reverse {
-  transform: translate(-50%,-100%) rotate(-135deg);    
-} 
-%deg-225-reverse { 
-  transform: translate(-50%,-100%) rotate(585deg);    
-} 
+  transform: translate(-50%,-100%) rotate(-135deg);
+}
+%deg-225-reverse {
+  transform: translate(-50%,-100%) rotate(585deg);
+}
 
-%deg-270 { 
-  transform: translate(-50%,-100%) rotate(270deg);      
+%deg-270 {
+  transform: translate(-50%,-100%) rotate(270deg);
 }
 %deg-270-reverse {
-  transform: translate(-50%,-100%) rotate(-90deg);    
-} 
+  transform: translate(-50%,-100%) rotate(-90deg);
+}
 %deg-270-reverse {
-  transform: translate(-50%,-100%) rotate(630deg);    
-} 
+  transform: translate(-50%,-100%) rotate(630deg);
+}
 
 %deg-315 {
-  transform: translate(-50%,-100%) rotate(315deg);  
+  transform: translate(-50%,-100%) rotate(315deg);
 }
-%deg-315-reverse { 
-  transform: translate(-50%,-100%) rotate(-45deg);    
-} 
-%deg-315-reverse { 
-  transform: translate(-50%,-100%) rotate(675deg);    
-} 
+%deg-315-reverse {
+  transform: translate(-50%,-100%) rotate(-45deg);
+}
+%deg-315-reverse {
+  transform: translate(-50%,-100%) rotate(675deg);
+}
 
 
 html, body {
@@ -114,27 +114,27 @@ html {
   justify-content: center;
   flex-wrap: nowrap;
   flex-direction: row;
-  
-  @media (orientation:portrait) {    
+
+  @media (orientation:portrait) {
     flex-wrap: wrap;
     max-width: 50vh;
-  }  
-  
-  * {
-    box-sizing: border-box;
-  }  
-
-  .digit {
-    
-    display: inline-block;
-    flex: 0 0 20%;
-    max-width: 70vh; 
-    
   }
 
-  @media (orientation:portrait) {  
+  * {
+    box-sizing: border-box;
+  }
+
+  .digit {
+
+    display: inline-block;
+    flex: 0 0 20%;
+    max-width: 70vh;
+
+  }
+
+  @media (orientation:portrait) {
     .digit {
-      flex: 0 0 20vh;   
+      flex: 0 0 20vh;
     }
     .digit:nth-child(1),
     .digit:nth-child(2){
@@ -143,15 +143,15 @@ html {
     .digit:nth-child(3),
     .digit:nth-child(4){
        align-self: flex-start;
-    }    
-  }    
-  
+    }
+  }
+
   .pixel_row {
     display: flex;
     justify-content: center;
   }
 
-    
+
   .digit:nth-child(odd) .pixel_row {
     justify-content: flex-end;
   }
@@ -162,21 +162,21 @@ html {
 
   .digit:nth-child(even) {
     margin-right: $couples_spacing;
-  }  
-  .digit:nth-child(even):last-child { 
+  }
+  .digit:nth-child(even):last-child {
     margin-right: 0;
   }
-  
-  
+
+
   @media (orientation:portrait) {
     .digit {
       margin-right: 0;
-      margin-top: 2vh;      
-    }  
+      margin-top: 2vh;
+    }
 
   }
 
-  
+
   .pixel_col {
     display: flex;
     flex: 0 0 25%;
@@ -184,7 +184,7 @@ html {
     max-width: 15vh;
     min-width: 2.5rem;
   }
-  
+
   .pixel {
     position: relative;
     width: 100%;
@@ -201,21 +201,21 @@ html {
       background: $clock_pin_color;
       border-radius: 100%;
     }
-    
+
     &:before {
       content: "";
       display: block;
       height: 0;
       padding-bottom: 100%;
-      box-shadow: inset 0 0 0 1px $clock_frame_color,  
-        inset 0.2rem 0.3rem 0.2rem rgba(0, 0, 0, 0.15), 
+      box-shadow: inset 0 0 0 1px $clock_frame_color,
+        inset 0.2rem 0.3rem 0.2rem rgba(0, 0, 0, 0.15),
         0.2rem 0.3rem 0.5rem rgba(0, 0, 0, 0.25);
       border-radius: 100%;
       background: $cock_frame_background;
-    }  
-    
+    }
+
   }
-  
+
   .line {
     position: absolute;
     display: block;
@@ -226,16 +226,16 @@ html {
     left: 50%;
     transform-origin: center bottom;
     transition: transform $clock_refreshInterval $clock_easing_minutes 0s;
-    border-radius: 2rem;   
+    border-radius: 2rem;
     @extend %deg-225;
   }
 
   .hours.line {
     height: 30%;
-    transition: transform $clock_refreshInterval $clock_easing_hours 0s; 
+    transition: transform $clock_refreshInterval $clock_easing_hours 0s;
   }
 
-  
+
   /* --- - --- */
   [display="-"] {
     .hours {
@@ -245,7 +245,7 @@ html {
       @extend %deg-0-reverse;
     }
   }
-  
+
   /* --- 0 --- */
   [display="0"] {
 
@@ -273,7 +273,7 @@ html {
         .minutes {
           @extend %deg-270;
         }
-      }  
+      }
       [col="4"] {
         .hours {
           @extend %deg-180-reverse;
@@ -281,7 +281,7 @@ html {
         .minutes {
           @extend %deg-270;
         }
-      }      
+      }
     }
 
     [row="2"] {
@@ -308,7 +308,7 @@ html {
         .minutes {
           @extend %deg-270;
         }
-      }  
+      }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
@@ -316,7 +316,7 @@ html {
         .minutes {
           @extend %deg-180;
         }
-      }      
+      }
     }
 
     [row="3"] {
@@ -343,7 +343,7 @@ html {
         .minutes {
           @extend %deg-180;
         }
-      }  
+      }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
@@ -351,7 +351,7 @@ html {
         .minutes {
           @extend %deg-180;
         }
-      }      
+      }
     }
 
     [row="4"] {
@@ -378,7 +378,7 @@ html {
         .minutes {
           @extend %deg-180;
         }
-      }  
+      }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
@@ -386,7 +386,7 @@ html {
         .minutes {
           @extend %deg-180;
         }
-      }      
+      }
     }
 
     [row="5"] {
@@ -413,7 +413,7 @@ html {
         .minutes {
           @extend %deg-270;
         }
-      }  
+      }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
@@ -421,7 +421,7 @@ html {
         .minutes {
           @extend %deg-180;
         }
-      }      
+      }
     }
 
     [row="6"] {
@@ -448,7 +448,7 @@ html {
         .minutes {
           @extend %deg-270;
         }
-      }  
+      }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
@@ -456,8 +456,8 @@ html {
         .minutes {
           @extend %deg-270;
         }
-      }      
-    }  
+      }
+    }
 
   }
 
@@ -479,26 +479,26 @@ html {
         }
         .minutes {
           @extend %deg-90;
-        } 
+        }
       }
       [col="3"] {
         .hours {
           @extend %deg-270-reverse;
-        }      
+        }
         .minutes {
           @extend %deg-180;
-        } 
-      }    
-    } 
+        }
+      }
+    }
 
     [row="2"] {
       [col="1"] {
         .hours {
           @extend %deg-0-reverse;
-        } 
+        }
         .minutes {
           @extend %deg-90;
-        }      
+        }
       }
       [col="2"] {
         .hours {
@@ -506,15 +506,15 @@ html {
         }
         .minutes {
           @extend %deg-180;
-        } 
-      }    
+        }
+      }
       [col="3"] {
         .hours {
           @extend %deg-0-reverse;
         }
         .minutes {
           @extend %deg-180;
-        }       
+        }
       }
     }
 
@@ -525,7 +525,7 @@ html {
         }
         .minutes {
           @extend %deg-180;
-        } 
+        }
       }
       [col="3"] {
         .hours {
@@ -533,18 +533,18 @@ html {
         }
         .minutes {
           @extend %deg-180;
-        } 
+        }
       }
-    } 
+    }
 
     [row="4"] {
       [col="2"] {
         .hours {
           @extend %deg-0-reverse;
-        } 
+        }
         .minutes {
           @extend %deg-180;
-        } 
+        }
       }
       [col="3"] {
         .hours {
@@ -552,9 +552,9 @@ html {
         }
         .minutes {
           @extend %deg-180;
-        } 
+        }
       }
-    } 
+    }
 
     [row="5"] {
       [col="1"] {
@@ -564,7 +564,7 @@ html {
         .minutes {
           @extend %deg-90;
         }
-      }    
+      }
       [col="2"] {
         .hours {
           @extend %deg-0-reverse;
@@ -576,7 +576,7 @@ html {
       [col="3"] {
         .hours {
           @extend %deg-0-reverse;
-        }  
+        }
         .minutes {
           @extend %deg-90;
         }
@@ -589,7 +589,7 @@ html {
           @extend %deg-270;
         }
       }
-    } 
+    }
 
     [row="6"] {
       [col="1"] {
@@ -598,7 +598,7 @@ html {
         }
         .minutes {
           @extend %deg-90;
-        }       
+        }
       }
       [col="2"] {
         .hours {
@@ -606,7 +606,7 @@ html {
         }
         .minutes {
           @extend %deg-90;
-        }       
+        }
       }
       [col="3"] {
         .hours {
@@ -614,8 +614,8 @@ html {
         }
         .minutes {
           @extend %deg-90;
-        }       
-      }    
+        }
+      }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
@@ -645,7 +645,7 @@ html {
         }
         .minutes {
           @extend %deg-270;
-        } 
+        }
       }
       [col="3"] {
         .hours {
@@ -653,17 +653,17 @@ html {
         }
         .minutes {
           @extend %deg-270;
-        } 
-      }  
+        }
+      }
       [col="4"] {
         .hours {
           @extend %deg-180-reverse;
         }
         .minutes {
           @extend %deg-270;
-        } 
-      }      
-    } 
+        }
+      }
+    }
 
     [row="2"] {
       [col="1"] {
@@ -680,7 +680,7 @@ html {
         }
         .minutes {
           @extend %deg-270;
-        } 
+        }
       }
       [col="3"] {
         .hours {
@@ -688,16 +688,16 @@ html {
         }
         .minutes {
           @extend %deg-270;
-        } 
-      }  
+        }
+      }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
         }
         .minutes {
           @extend %deg-180;
-        } 
-      }     
+        }
+      }
     }
 
     [row="3"] {
@@ -707,15 +707,15 @@ html {
         }
         .minutes {
           @extend %deg-180;
-        }  
-      }   
+        }
+      }
       [col="2"] {
         .hours {
           @extend %deg-90-reverse;
         }
         .minutes {
           @extend %deg-270;
-        }  
+        }
       }
       [col="3"] {
         .hours {
@@ -723,17 +723,17 @@ html {
         }
         .minutes {
           @extend %deg-270;
-        } 
+        }
       }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
-        }      
+        }
         .minutes {
           @extend %deg-180;
         }
-      }    
-    } 
+      }
+    }
 
     [row="4"] {
       [col="1"] {
@@ -750,7 +750,7 @@ html {
         }
         .minutes {
           @extend %deg-180;
-        } 
+        }
       }
       [col="3"] {
         .hours {
@@ -758,16 +758,16 @@ html {
         }
         .minutes {
           @extend %deg-270-reverse;
-        } 
-      }  
+        }
+      }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
         }
         .minutes {
           @extend %deg-270;
-        } 
-      }      
+        }
+      }
     }
 
     [row="5"] {
@@ -778,7 +778,7 @@ html {
         .minutes {
           @extend %deg-180;
         }
-      }    
+      }
       [col="2"] {
         .hours {
           @extend %deg-0-reverse;
@@ -787,7 +787,7 @@ html {
           @extend %deg-90;
         }
       }
-      [col="3"] {   
+      [col="3"] {
         .hours {
           @extend %deg-90-reverse;
         }
@@ -803,7 +803,7 @@ html {
           @extend %deg-270;
         }
       }
-    } 
+    }
 
     [row="6"] {
       [col="1"] {
@@ -829,7 +829,7 @@ html {
         .minutes {
           @extend %deg-270;
         }
-      }    
+      }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
@@ -869,7 +869,7 @@ html {
         .minutes {
           @extend %deg-270;
         }
-      }  
+      }
       [col="4"] {
         .hours {
           @extend %deg-180-reverse;
@@ -877,7 +877,7 @@ html {
         .minutes {
           @extend %deg-270;
         }
-      }      
+      }
     }
 
     [row="2"] {
@@ -904,7 +904,7 @@ html {
         .minutes {
           @extend %deg-270;
         }
-      }  
+      }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
@@ -912,7 +912,7 @@ html {
         .minutes {
           @extend %deg-180;
         }
-      }      
+      }
     }
 
     [row="3"] {
@@ -939,7 +939,7 @@ html {
         .minutes {
           @extend %deg-270;
         }
-      }  
+      }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
@@ -947,7 +947,7 @@ html {
         .minutes {
           @extend %deg-225;
         }
-      }      
+      }
     }
 
     [row="4"] {
@@ -974,7 +974,7 @@ html {
         .minutes {
           @extend %deg-270;
         }
-      }   
+      }
       [col="4"] {
         .hours {
           @extend %deg-315;
@@ -982,7 +982,7 @@ html {
         .minutes {
           @extend %deg-180;
         }
-      }      
+      }
     }
 
     [row="5"] {
@@ -1009,7 +1009,7 @@ html {
         .minutes {
           @extend %deg-270;
         }
-      }  
+      }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
@@ -1017,7 +1017,7 @@ html {
         .minutes {
           @extend %deg-180;
         }
-      }      
+      }
     }
 
     [row="6"] {
@@ -1044,7 +1044,7 @@ html {
         .minutes {
           @extend %deg-270;
         }
-      }  
+      }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
@@ -1052,8 +1052,8 @@ html {
         .minutes {
           @extend %deg-270;
         }
-      }      
-    }  
+      }
+    }
 
   }
 
@@ -1075,7 +1075,7 @@ html {
         }
         .minutes {
           @extend %deg-270;
-        } 
+        }
       }
       [col="3"] {
         .hours {
@@ -1083,17 +1083,17 @@ html {
         }
         .minutes {
           @extend %deg-180;
-        } 
-      }  
+        }
+      }
       [col="4"] {
         .hours {
           @extend %deg-180-reverse;
         }
         .minutes {
           @extend %deg-270;
-        } 
-      }      
-    } 
+        }
+      }
+    }
 
     [row="2"] {
       [col="1"] {
@@ -1110,7 +1110,7 @@ html {
         }
         .minutes {
           @extend %deg-180;
-        } 
+        }
       }
       [col="3"] {
         .hours {
@@ -1118,16 +1118,16 @@ html {
         }
         .minutes {
           @extend %deg-0;
-        } 
-      }  
+        }
+      }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
         }
         .minutes {
           @extend %deg-180;
-        } 
-      }     
+        }
+      }
     }
 
     [row="3"] {
@@ -1137,15 +1137,15 @@ html {
         }
         .minutes {
           @extend %deg-180;
-        }  
-      }   
+        }
+      }
       [col="2"] {
         .hours {
           @extend %deg-0-reverse;
         }
         .minutes {
           @extend %deg-90;
-        }  
+        }
       }
       [col="3"] {
         .hours {
@@ -1153,17 +1153,17 @@ html {
         }
         .minutes {
           @extend %deg-270;
-        } 
+        }
       }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
-        }      
+        }
         .minutes {
           @extend %deg-180;
         }
-      }    
-    } 
+      }
+    }
 
     [row="4"] {
       [col="1"] {
@@ -1180,7 +1180,7 @@ html {
         }
         .minutes {
           @extend %deg-270;
-        } 
+        }
       }
       [col="3"] {
         .hours {
@@ -1188,16 +1188,16 @@ html {
         }
         .minutes {
           @extend %deg-270;
-        } 
-      }  
+        }
+      }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
         }
         .minutes {
           @extend %deg-180;
-        } 
-      }      
+        }
+      }
     }
 
     [row="5"] {
@@ -1208,7 +1208,7 @@ html {
         .minutes {
 
         }
-      }    
+      }
       [col="2"] {
         .hours {
 
@@ -1217,7 +1217,7 @@ html {
 
         }
       }
-      [col="3"] {   
+      [col="3"] {
         .hours {
           @extend %deg-0-reverse;
         }
@@ -1233,7 +1233,7 @@ html {
           @extend %deg-0;
         }
       }
-    } 
+    }
 
     [row="6"] {
       [col="1"] {
@@ -1259,7 +1259,7 @@ html {
         .minutes {
           @extend %deg-90;
         }
-      }    
+      }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
@@ -1290,7 +1290,7 @@ html {
         }
         .minutes {
           @extend %deg-270;
-        } 
+        }
       }
       [col="3"] {
         .hours {
@@ -1298,17 +1298,17 @@ html {
         }
         .minutes {
           @extend %deg-270;
-        } 
-      }  
+        }
+      }
       [col="4"] {
         .hours {
           @extend %deg-180-reverse;
         }
         .minutes {
           @extend %deg-270;
-        } 
-      }      
-    } 
+        }
+      }
+    }
 
     [row="2"] {
       [col="1"] {
@@ -1325,7 +1325,7 @@ html {
         }
         .minutes {
           @extend %deg-180;
-        } 
+        }
       }
       [col="3"] {
         .hours {
@@ -1333,16 +1333,16 @@ html {
         }
         .minutes {
           @extend %deg-270;
-        } 
-      }  
+        }
+      }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
         }
         .minutes {
           @extend %deg-270;
-        } 
-      }     
+        }
+      }
     }
 
     [row="3"] {
@@ -1352,15 +1352,15 @@ html {
         }
         .minutes {
           @extend %deg-180;
-        }  
-      }   
+        }
+      }
       [col="2"] {
         .hours {
           @extend %deg-0-reverse;
         }
         .minutes {
           @extend %deg-90;
-        }  
+        }
       }
       [col="3"] {
         .hours {
@@ -1368,17 +1368,17 @@ html {
         }
         .minutes {
           @extend %deg-270;
-        } 
+        }
       }
       [col="4"] {
         .hours {
           @extend %deg-180-reverse;
-        }      
+        }
         .minutes {
           @extend %deg-270;
         }
-      }    
-    } 
+      }
+    }
 
     [row="4"] {
       [col="1"] {
@@ -1395,7 +1395,7 @@ html {
         }
         .minutes {
           @extend %deg-270;
-        } 
+        }
       }
       [col="3"] {
         .hours {
@@ -1403,16 +1403,16 @@ html {
         }
         .minutes {
           @extend %deg-270;
-        } 
-      }  
+        }
+      }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
         }
         .minutes {
           @extend %deg-180;
-        } 
-      }      
+        }
+      }
     }
 
     [row="5"] {
@@ -1423,7 +1423,7 @@ html {
         .minutes {
           @extend %deg-180;
         }
-      }    
+      }
       [col="2"] {
         .hours {
           @extend %deg-270-reverse;
@@ -1432,7 +1432,7 @@ html {
           @extend %deg-90;
         }
       }
-      [col="3"] {   
+      [col="3"] {
         .hours {
           @extend %deg-0-reverse;
         }
@@ -1448,7 +1448,7 @@ html {
           @extend %deg-0;
         }
       }
-    } 
+    }
 
     [row="6"] {
       [col="1"] {
@@ -1474,7 +1474,7 @@ html {
         .minutes {
           @extend %deg-270;
         }
-      }    
+      }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
@@ -1505,7 +1505,7 @@ html {
         }
         .minutes {
           @extend %deg-270;
-        } 
+        }
       }
       [col="3"] {
         .hours {
@@ -1513,17 +1513,17 @@ html {
         }
         .minutes {
           @extend %deg-270;
-        } 
-      }  
+        }
+      }
       [col="4"] {
         .hours {
           @extend %deg-180-reverse;
         }
         .minutes {
           @extend %deg-270;
-        } 
-      }      
-    } 
+        }
+      }
+    }
 
     [row="2"] {
       [col="1"] {
@@ -1540,7 +1540,7 @@ html {
         }
         .minutes {
           @extend %deg-180;
-        } 
+        }
       }
       [col="3"] {
         .hours {
@@ -1548,16 +1548,16 @@ html {
         }
         .minutes {
           @extend %deg-270;
-        } 
-      }  
+        }
+      }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
         }
         .minutes {
           @extend %deg-270;
-        } 
-      }     
+        }
+      }
     }
 
     [row="3"] {
@@ -1567,15 +1567,15 @@ html {
         }
         .minutes {
           @extend %deg-180;
-        }  
-      }   
+        }
+      }
       [col="2"] {
         .hours {
           @extend %deg-0-reverse;
         }
         .minutes {
           @extend %deg-90;
-        }  
+        }
       }
       [col="3"] {
         .hours {
@@ -1583,17 +1583,17 @@ html {
         }
         .minutes {
           @extend %deg-270;
-        } 
+        }
       }
       [col="4"] {
         .hours {
           @extend %deg-180-reverse;
-        }      
+        }
         .minutes {
           @extend %deg-270;
         }
-      }    
-    } 
+      }
+    }
 
     [row="4"] {
       [col="1"] {
@@ -1610,7 +1610,7 @@ html {
         }
         .minutes {
           @extend %deg-180;
-        } 
+        }
       }
       [col="3"] {
         .hours {
@@ -1618,16 +1618,16 @@ html {
         }
         .minutes {
           @extend %deg-270;
-        } 
-      }  
+        }
+      }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
         }
         .minutes {
           @extend %deg-180;
-        } 
-      }      
+        }
+      }
     }
 
     [row="5"] {
@@ -1638,7 +1638,7 @@ html {
         .minutes {
           @extend %deg-180;
         }
-      }    
+      }
       [col="2"] {
         .hours {
           @extend %deg-0-reverse;
@@ -1647,7 +1647,7 @@ html {
           @extend %deg-90;
         }
       }
-      [col="3"] {   
+      [col="3"] {
         .hours {
           @extend %deg-0-reverse;
         }
@@ -1663,7 +1663,7 @@ html {
           @extend %deg-0;
         }
       }
-    } 
+    }
 
     [row="6"] {
       [col="1"] {
@@ -1689,7 +1689,7 @@ html {
         .minutes {
           @extend %deg-270;
         }
-      }    
+      }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
@@ -1720,7 +1720,7 @@ html {
         }
         .minutes {
           @extend %deg-270;
-        } 
+        }
       }
       [col="3"] {
         .hours {
@@ -1728,17 +1728,17 @@ html {
         }
         .minutes {
           @extend %deg-270;
-        } 
-      }  
+        }
+      }
       [col="4"] {
         .hours {
           @extend %deg-180-reverse;
         }
         .minutes {
           @extend %deg-270;
-        } 
-      }      
-    } 
+        }
+      }
+    }
 
     [row="2"] {
       [col="1"] {
@@ -1755,7 +1755,7 @@ html {
         }
         .minutes {
           @extend %deg-270;
-        } 
+        }
       }
       [col="3"] {
         .hours {
@@ -1763,16 +1763,16 @@ html {
         }
         .minutes {
           @extend %deg-270;
-        } 
-      }  
+        }
+      }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
         }
         .minutes {
           @extend %deg-180;
-        } 
-      }     
+        }
+      }
     }
 
     [row="3"] {
@@ -1782,15 +1782,15 @@ html {
         }
         .minutes {
 
-        }  
-      }   
+        }
+      }
       [col="2"] {
         .hours {
 
         }
         .minutes {
 
-        }  
+        }
       }
       [col="3"] {
         .hours {
@@ -1798,17 +1798,17 @@ html {
         }
         .minutes {
           @extend %deg-225;
-        } 
+        }
       }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
-        }      
+        }
         .minutes {
           @extend %deg-225;
         }
-      }    
-    } 
+      }
+    }
 
     [row="4"] {
       [col="1"] {
@@ -1825,24 +1825,24 @@ html {
         }
         .minutes {
           @extend %deg-180;
-        } 
-      }  
+        }
+      }
       [col="3"] {
         .hours {
           @extend %deg-45-reverse;
         }
         .minutes {
           @extend %deg-180;
-        } 
-      }   
+        }
+      }
       [col="4"] {
         .hours {
 
         }
         .minutes {
 
-        } 
-      }    
+        }
+      }
     }
 
     [row="5"] {
@@ -1853,8 +1853,8 @@ html {
         .minutes {
 
         }
-      }    
-      [col="2"] {   
+      }
+      [col="2"] {
         .hours {
           @extend %deg-0-reverse;
         }
@@ -1877,8 +1877,8 @@ html {
         .minutes {
 
         }
-      }    
-    } 
+      }
+    }
 
     [row="6"] {
       [col="1"] {
@@ -1896,7 +1896,7 @@ html {
         .minutes {
           @extend %deg-90;
         }
-      }    
+      }
       [col="3"] {
         .hours {
           @extend %deg-0-reverse;
@@ -1912,7 +1912,7 @@ html {
         .minutes {
 
         }
-      }    
+      }
     }
 
   }
@@ -1944,7 +1944,7 @@ html {
         .minutes {
           @extend %deg-270;
         }
-      }  
+      }
       [col="4"] {
         .hours {
           @extend %deg-180-reverse;
@@ -1952,7 +1952,7 @@ html {
         .minutes {
           @extend %deg-270;
         }
-      }      
+      }
     }
 
     [row="2"] {
@@ -1979,7 +1979,7 @@ html {
         .minutes {
           @extend %deg-270;
         }
-      }  
+      }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
@@ -1987,7 +1987,7 @@ html {
         .minutes {
           @extend %deg-180;
         }
-      }      
+      }
     }
 
     [row="3"] {
@@ -2014,7 +2014,7 @@ html {
         .minutes {
           @extend %deg-270;
         }
-      }  
+      }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
@@ -2022,7 +2022,7 @@ html {
         .minutes {
           @extend %deg-225;
         }
-      }      
+      }
     }
 
     [row="4"] {
@@ -2049,7 +2049,7 @@ html {
         .minutes {
           @extend %deg-270;
         }
-      }   
+      }
       [col="4"] {
         .hours {
           @extend %deg-315-reverse;
@@ -2057,7 +2057,7 @@ html {
         .minutes {
           @extend %deg-180;
         }
-      }      
+      }
     }
 
     [row="5"] {
@@ -2084,7 +2084,7 @@ html {
         .minutes {
           @extend %deg-270;
         }
-      }  
+      }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
@@ -2092,7 +2092,7 @@ html {
         .minutes {
           @extend %deg-180;
         }
-      }      
+      }
     }
 
     [row="6"] {
@@ -2119,7 +2119,7 @@ html {
         .minutes {
           @extend %deg-270;
         }
-      }  
+      }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
@@ -2127,8 +2127,8 @@ html {
         .minutes {
           @extend %deg-270;
         }
-      }      
-    }  
+      }
+    }
 
   }
 
@@ -2150,7 +2150,7 @@ html {
         }
         .minutes {
           @extend %deg-270;
-        } 
+        }
       }
       [col="3"] {
         .hours {
@@ -2158,17 +2158,17 @@ html {
         }
         .minutes {
           @extend %deg-270;
-        } 
-      }  
+        }
+      }
       [col="4"] {
         .hours {
           @extend %deg-180-reverse;
         }
         .minutes {
           @extend %deg-270;
-        } 
-      }      
-    } 
+        }
+      }
+    }
 
     [row="2"] {
       [col="1"] {
@@ -2185,7 +2185,7 @@ html {
         }
         .minutes {
           @extend %deg-180;
-        } 
+        }
       }
       [col="3"] {
         .hours {
@@ -2193,16 +2193,16 @@ html {
         }
         .minutes {
           @extend %deg-270;
-        } 
-      }  
+        }
+      }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
         }
         .minutes {
           @extend %deg-180;
-        } 
-      }     
+        }
+      }
     }
 
     [row="3"] {
@@ -2212,15 +2212,15 @@ html {
         }
         .minutes {
           @extend %deg-180;
-        }  
-      }   
+        }
+      }
       [col="2"] {
         .hours {
           @extend %deg-0-reverse;
         }
         .minutes {
           @extend %deg-90;
-        }  
+        }
       }
       [col="3"] {
         .hours {
@@ -2228,17 +2228,17 @@ html {
         }
         .minutes {
           @extend %deg-270;
-        } 
+        }
       }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
-        }      
+        }
         .minutes {
           @extend %deg-180;
         }
-      }    
-    } 
+      }
+    }
 
     [row="4"] {
       [col="1"] {
@@ -2255,7 +2255,7 @@ html {
         }
         .minutes {
           @extend %deg-270;
-        } 
+        }
       }
       [col="3"] {
         .hours {
@@ -2263,16 +2263,16 @@ html {
         }
         .minutes {
           @extend %deg-270;
-        } 
-      }  
+        }
+      }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
         }
         .minutes {
           @extend %deg-180;
-        } 
-      }      
+        }
+      }
     }
 
     [row="5"] {
@@ -2283,7 +2283,7 @@ html {
         .minutes {
           @extend %deg-180;
         }
-      }    
+      }
       [col="2"] {
         .hours {
           @extend %deg-270-reverse;
@@ -2292,7 +2292,7 @@ html {
           @extend %deg-90;
         }
       }
-      [col="3"] {   
+      [col="3"] {
         .hours {
           @extend %deg-0-reverse;
         }
@@ -2308,7 +2308,7 @@ html {
           @extend %deg-0;
         }
       }
-    } 
+    }
 
     [row="6"] {
       [col="1"] {
@@ -2334,7 +2334,7 @@ html {
         .minutes {
           @extend %deg-270;
         }
-      }    
+      }
       [col="4"] {
         .hours {
           @extend %deg-0-reverse;
@@ -2352,8 +2352,8 @@ html {
 
     .line {
       @extend %deg-225-reverse;
-    }  
-    
+    }
+
     /* --- - --- */
     [display="-"] {
 
@@ -2394,7 +2394,7 @@ html {
           .minutes {
             @extend %deg-270-reverse;
           }
-        }  
+        }
         [col="4"] {
           .hours {
             @extend %deg-180;
@@ -2402,7 +2402,7 @@ html {
           .minutes {
             @extend %deg-270-reverse;
           }
-        }      
+        }
       }
 
       [row="2"] {
@@ -2429,7 +2429,7 @@ html {
           .minutes {
             @extend %deg-270-reverse;
           }
-        }  
+        }
         [col="4"] {
           .hours {
             @extend %deg-0;
@@ -2437,7 +2437,7 @@ html {
           .minutes {
             @extend %deg-180-reverse;
           }
-        }      
+        }
       }
 
       [row="3"] {
@@ -2464,7 +2464,7 @@ html {
           .minutes {
             @extend %deg-180-reverse;
           }
-        }  
+        }
         [col="4"] {
           .hours {
             @extend %deg-0;
@@ -2472,7 +2472,7 @@ html {
           .minutes {
             @extend %deg-180-reverse;
           }
-        }      
+        }
       }
 
       [row="4"] {
@@ -2499,7 +2499,7 @@ html {
           .minutes {
             @extend %deg-180-reverse;
           }
-        }  
+        }
         [col="4"] {
           .hours {
             @extend %deg-0;
@@ -2507,7 +2507,7 @@ html {
           .minutes {
             @extend %deg-180-reverse;
           }
-        }      
+        }
       }
 
       [row="5"] {
@@ -2534,7 +2534,7 @@ html {
           .minutes {
             @extend %deg-270-reverse;
           }
-        }  
+        }
         [col="4"] {
           .hours {
             @extend %deg-0;
@@ -2542,7 +2542,7 @@ html {
           .minutes {
             @extend %deg-180-reverse;
           }
-        }      
+        }
       }
 
       [row="6"] {
@@ -2569,7 +2569,7 @@ html {
           .minutes {
             @extend %deg-270-reverse;
           }
-        }  
+        }
         [col="4"] {
           .hours {
             @extend %deg-0;
@@ -2577,8 +2577,8 @@ html {
           .minutes {
             @extend %deg-270-reverse;
           }
-        }      
-      }  
+        }
+      }
 
     }
 
@@ -2600,26 +2600,26 @@ html {
           }
           .minutes {
             @extend %deg-90-reverse;
-          } 
+          }
         }
         [col="3"] {
           .hours {
             @extend %deg-270;
-          }      
+          }
           .minutes {
             @extend %deg-180-reverse;
-          } 
-        }    
-      } 
+          }
+        }
+      }
 
       [row="2"] {
         [col="1"] {
           .hours {
             @extend %deg-0;
-          } 
+          }
           .minutes {
             @extend %deg-90-reverse;
-          }      
+          }
         }
         [col="2"] {
           .hours {
@@ -2627,15 +2627,15 @@ html {
           }
           .minutes {
             @extend %deg-180-reverse;
-          } 
-        }    
+          }
+        }
         [col="3"] {
           .hours {
             @extend %deg-0;
           }
           .minutes {
             @extend %deg-180-reverse;
-          }       
+          }
         }
       }
 
@@ -2646,7 +2646,7 @@ html {
           }
           .minutes {
             @extend %deg-180-reverse;
-          } 
+          }
         }
         [col="3"] {
           .hours {
@@ -2654,18 +2654,18 @@ html {
           }
           .minutes {
             @extend %deg-180-reverse;
-          } 
+          }
         }
-      } 
+      }
 
       [row="4"] {
         [col="2"] {
           .hours {
             @extend %deg-0;
-          } 
+          }
           .minutes {
             @extend %deg-180-reverse;
-          } 
+          }
         }
         [col="3"] {
           .hours {
@@ -2673,9 +2673,9 @@ html {
           }
           .minutes {
             @extend %deg-180-reverse;
-          } 
+          }
         }
-      } 
+      }
 
       [row="5"] {
         [col="1"] {
@@ -2685,7 +2685,7 @@ html {
           .minutes {
             @extend %deg-90-reverse;
           }
-        }    
+        }
         [col="2"] {
           .hours {
             @extend %deg-0;
@@ -2697,7 +2697,7 @@ html {
         [col="3"] {
           .hours {
             @extend %deg-0;
-          }  
+          }
           .minutes {
             @extend %deg-90-reverse;
           }
@@ -2710,7 +2710,7 @@ html {
             @extend %deg-270-reverse;
           }
         }
-      } 
+      }
 
       [row="6"] {
         [col="1"] {
@@ -2719,7 +2719,7 @@ html {
           }
           .minutes {
             @extend %deg-90-reverse;
-          }       
+          }
         }
         [col="2"] {
           .hours {
@@ -2727,7 +2727,7 @@ html {
           }
           .minutes {
             @extend %deg-90-reverse;
-          }       
+          }
         }
         [col="3"] {
           .hours {
@@ -2735,8 +2735,8 @@ html {
           }
           .minutes {
             @extend %deg-90-reverse;
-          }       
-        }    
+          }
+        }
         [col="4"] {
           .hours {
             @extend %deg-0;
@@ -2766,7 +2766,7 @@ html {
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
+          }
         }
         [col="3"] {
           .hours {
@@ -2774,17 +2774,17 @@ html {
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
-        }  
+          }
+        }
         [col="4"] {
           .hours {
             @extend %deg-180;
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
-        }      
-      } 
+          }
+        }
+      }
 
       [row="2"] {
         [col="1"] {
@@ -2801,7 +2801,7 @@ html {
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
+          }
         }
         [col="3"] {
           .hours {
@@ -2809,16 +2809,16 @@ html {
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
-        }  
+          }
+        }
         [col="4"] {
           .hours {
             @extend %deg-0;
           }
           .minutes {
             @extend %deg-180-reverse;
-          } 
-        }     
+          }
+        }
       }
 
       [row="3"] {
@@ -2828,15 +2828,15 @@ html {
           }
           .minutes {
             @extend %deg-180-reverse;
-          }  
-        }   
+          }
+        }
         [col="2"] {
           .hours {
             @extend %deg-90;
           }
           .minutes {
             @extend %deg-270-reverse;
-          }  
+          }
         }
         [col="3"] {
           .hours {
@@ -2844,17 +2844,17 @@ html {
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
+          }
         }
         [col="4"] {
           .hours {
             @extend %deg-0;
-          }      
+          }
           .minutes {
             @extend %deg-180-reverse;
           }
-        }    
-      } 
+        }
+      }
 
       [row="4"] {
         [col="1"] {
@@ -2871,7 +2871,7 @@ html {
           }
           .minutes {
             @extend %deg-180-reverse;
-          } 
+          }
         }
         [col="3"] {
           .hours {
@@ -2879,16 +2879,16 @@ html {
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
-        }  
+          }
+        }
         [col="4"] {
           .hours {
             @extend %deg-0;
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
-        }      
+          }
+        }
       }
 
       [row="5"] {
@@ -2899,7 +2899,7 @@ html {
           .minutes {
             @extend %deg-180-reverse;
           }
-        }    
+        }
         [col="2"] {
           .hours {
             @extend %deg-0;
@@ -2908,7 +2908,7 @@ html {
             @extend %deg-90-reverse;
           }
         }
-        [col="3"] {   
+        [col="3"] {
           .hours {
             @extend %deg-90;
           }
@@ -2924,7 +2924,7 @@ html {
             @extend %deg-270-reverse;
           }
         }
-      } 
+      }
 
       [row="6"] {
         [col="1"] {
@@ -2950,7 +2950,7 @@ html {
           .minutes {
             @extend %deg-270-reverse;
           }
-        }    
+        }
         [col="4"] {
           .hours {
             @extend %deg-0;
@@ -2990,7 +2990,7 @@ html {
           .minutes {
             @extend %deg-270-reverse;
           }
-        }  
+        }
         [col="4"] {
           .hours {
             @extend %deg-180;
@@ -2998,7 +2998,7 @@ html {
           .minutes {
             @extend %deg-270-reverse;
           }
-        }      
+        }
       }
 
     [row="2"] {
@@ -3025,7 +3025,7 @@ html {
         .minutes {
           @extend %deg-270-reverse;
         }
-      }  
+      }
       [col="4"] {
         .hours {
           @extend %deg-0;
@@ -3033,7 +3033,7 @@ html {
         .minutes {
           @extend %deg-180-reverse;
         }
-      }      
+      }
     }
 
     [row="3"] {
@@ -3060,7 +3060,7 @@ html {
         .minutes {
           @extend %deg-270-reverse;
         }
-      }  
+      }
       [col="4"] {
         .hours {
           @extend %deg-0;
@@ -3068,7 +3068,7 @@ html {
         .minutes {
           @extend %deg-225-reverse;
         }
-      }      
+      }
     }
 
     [row="4"] {
@@ -3095,7 +3095,7 @@ html {
         .minutes {
           @extend %deg-270-reverse;
         }
-      }   
+      }
       [col="4"] {
         .hours {
           @extend %deg-315;
@@ -3103,7 +3103,7 @@ html {
         .minutes {
           @extend %deg-180-reverse;
         }
-      }      
+      }
     }
 
     [row="5"] {
@@ -3130,7 +3130,7 @@ html {
         .minutes {
           @extend %deg-270-reverse;
         }
-      }  
+      }
       [col="4"] {
         .hours {
           @extend %deg-0;
@@ -3138,7 +3138,7 @@ html {
         .minutes {
           @extend %deg-180-reverse;
         }
-      }      
+      }
     }
 
     [row="6"] {
@@ -3165,7 +3165,7 @@ html {
         .minutes {
           @extend %deg-270-reverse;
         }
-      }  
+      }
       [col="4"] {
         .hours {
           @extend %deg-0;
@@ -3173,8 +3173,8 @@ html {
         .minutes {
           @extend %deg-270-reverse;
         }
-      }      
-    }  
+      }
+    }
 
   }
 
@@ -3196,7 +3196,7 @@ html {
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
+          }
         }
         [col="3"] {
           .hours {
@@ -3204,17 +3204,17 @@ html {
           }
           .minutes {
             @extend %deg-180-reverse;
-          } 
-        }  
+          }
+        }
         [col="4"] {
           .hours {
             @extend %deg-180;
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
-        }      
-      } 
+          }
+        }
+      }
 
       [row="2"] {
         [col="1"] {
@@ -3231,7 +3231,7 @@ html {
           }
           .minutes {
             @extend %deg-180-reverse;
-          } 
+          }
         }
         [col="3"] {
           .hours {
@@ -3239,16 +3239,16 @@ html {
           }
           .minutes {
             @extend %deg-0-reverse;
-          } 
-        }  
+          }
+        }
         [col="4"] {
           .hours {
             @extend %deg-0;
           }
           .minutes {
             @extend %deg-180-reverse;
-          } 
-        }     
+          }
+        }
       }
 
       [row="3"] {
@@ -3258,15 +3258,15 @@ html {
           }
           .minutes {
             @extend %deg-180-reverse;
-          }  
-        }   
+          }
+        }
         [col="2"] {
           .hours {
             @extend %deg-0;
           }
           .minutes {
             @extend %deg-90-reverse;
-          }  
+          }
         }
         [col="3"] {
           .hours {
@@ -3274,17 +3274,17 @@ html {
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
+          }
         }
         [col="4"] {
           .hours {
             @extend %deg-0;
-          }      
+          }
           .minutes {
             @extend %deg-180-reverse;
           }
-        }    
-      } 
+        }
+      }
 
       [row="4"] {
         [col="1"] {
@@ -3301,7 +3301,7 @@ html {
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
+          }
         }
         [col="3"] {
           .hours {
@@ -3309,16 +3309,16 @@ html {
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
-        }  
+          }
+        }
         [col="4"] {
           .hours {
             @extend %deg-0;
           }
           .minutes {
             @extend %deg-180-reverse;
-          } 
-        }      
+          }
+        }
       }
 
       [row="5"] {
@@ -3329,7 +3329,7 @@ html {
           .minutes {
 
           }
-        }    
+        }
         [col="2"] {
           .hours {
 
@@ -3338,7 +3338,7 @@ html {
 
           }
         }
-        [col="3"] {   
+        [col="3"] {
           .hours {
             @extend %deg-0;
           }
@@ -3354,7 +3354,7 @@ html {
             @extend %deg-0-reverse;
           }
         }
-      } 
+      }
 
       [row="6"] {
         [col="1"] {
@@ -3380,7 +3380,7 @@ html {
           .minutes {
             @extend %deg-90-reverse;
           }
-        }    
+        }
         [col="4"] {
           .hours {
             @extend %deg-0;
@@ -3411,7 +3411,7 @@ html {
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
+          }
         }
         [col="3"] {
           .hours {
@@ -3419,17 +3419,17 @@ html {
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
-        }  
+          }
+        }
         [col="4"] {
           .hours {
             @extend %deg-180;
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
-        }      
-      } 
+          }
+        }
+      }
 
       [row="2"] {
         [col="1"] {
@@ -3446,7 +3446,7 @@ html {
           }
           .minutes {
             @extend %deg-180-reverse;
-          } 
+          }
         }
         [col="3"] {
           .hours {
@@ -3454,16 +3454,16 @@ html {
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
-        }  
+          }
+        }
         [col="4"] {
           .hours {
             @extend %deg-0;
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
-        }     
+          }
+        }
       }
 
       [row="3"] {
@@ -3473,15 +3473,15 @@ html {
           }
           .minutes {
             @extend %deg-180-reverse;
-          }  
-        }   
+          }
+        }
         [col="2"] {
           .hours {
             @extend %deg-0;
           }
           .minutes {
             @extend %deg-90-reverse;
-          }  
+          }
         }
         [col="3"] {
           .hours {
@@ -3489,17 +3489,17 @@ html {
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
+          }
         }
         [col="4"] {
           .hours {
             @extend %deg-180;
-          }      
+          }
           .minutes {
             @extend %deg-270-reverse;
           }
-        }    
-      } 
+        }
+      }
 
       [row="4"] {
         [col="1"] {
@@ -3516,7 +3516,7 @@ html {
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
+          }
         }
         [col="3"] {
           .hours {
@@ -3524,16 +3524,16 @@ html {
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
-        }  
+          }
+        }
         [col="4"] {
           .hours {
             @extend %deg-0;
           }
           .minutes {
             @extend %deg-180;
-          } 
-        }      
+          }
+        }
       }
 
       [row="5"] {
@@ -3544,7 +3544,7 @@ html {
           .minutes {
             @extend %deg-180;
           }
-        }    
+        }
         [col="2"] {
           .hours {
             @extend %deg-270;
@@ -3553,7 +3553,7 @@ html {
             @extend %deg-90-reverse;
           }
         }
-        [col="3"] {   
+        [col="3"] {
           .hours {
             @extend %deg-0;
           }
@@ -3569,7 +3569,7 @@ html {
             @extend %deg-0-reverse;
           }
         }
-      } 
+      }
 
       [row="6"] {
         [col="1"] {
@@ -3595,7 +3595,7 @@ html {
           .minutes {
             @extend %deg-270-reverse;
           }
-        }    
+        }
         [col="4"] {
           .hours {
             @extend %deg-0;
@@ -3626,7 +3626,7 @@ html {
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
+          }
         }
         [col="3"] {
           .hours {
@@ -3634,17 +3634,17 @@ html {
           }
           .minutes {
             @extend %deg-270;
-          } 
-        }  
+          }
+        }
         [col="4"] {
           .hours {
             @extend %deg-180-reverse;
           }
           .minutes {
             @extend %deg-270;
-          } 
-        }      
-      } 
+          }
+        }
+      }
 
       [row="2"] {
         [col="1"] {
@@ -3661,7 +3661,7 @@ html {
           }
           .minutes {
             @extend %deg-180;
-          } 
+          }
         }
         [col="3"] {
           .hours {
@@ -3669,16 +3669,16 @@ html {
           }
           .minutes {
             @extend %deg-270;
-          } 
-        }  
+          }
+        }
         [col="4"] {
           .hours {
             @extend %deg-0;
           }
           .minutes {
             @extend %deg-270;
-          } 
-        }     
+          }
+        }
       }
 
       [row="3"] {
@@ -3688,15 +3688,15 @@ html {
           }
           .minutes {
             @extend %deg-180-reverse;
-          }  
-        }   
+          }
+        }
         [col="2"] {
           .hours {
             @extend %deg-0;
           }
           .minutes {
             @extend %deg-90-reverse;
-          }  
+          }
         }
         [col="3"] {
           .hours {
@@ -3704,17 +3704,17 @@ html {
           }
           .minutes {
             @extend %deg-270;
-          } 
+          }
         }
         [col="4"] {
           .hours {
             @extend %deg-180;
-          }      
+          }
           .minutes {
             @extend %deg-270;
           }
-        }    
-      } 
+        }
+      }
 
       [row="4"] {
         [col="1"] {
@@ -3731,7 +3731,7 @@ html {
           }
           .minutes {
             @extend %deg-180;
-          } 
+          }
         }
         [col="3"] {
           .hours {
@@ -3739,16 +3739,16 @@ html {
           }
           .minutes {
             @extend %deg-270;
-          } 
-        }  
+          }
+        }
         [col="4"] {
           .hours {
             @extend %deg-0;
           }
           .minutes {
             @extend %deg-180;
-          } 
-        }      
+          }
+        }
       }
 
       [row="5"] {
@@ -3759,7 +3759,7 @@ html {
           .minutes {
             @extend %deg-180;
           }
-        }    
+        }
         [col="2"] {
           .hours {
             @extend %deg-0;
@@ -3768,7 +3768,7 @@ html {
             @extend %deg-90-reverse;
           }
         }
-        [col="3"] {   
+        [col="3"] {
           .hours {
             @extend %deg-0;
           }
@@ -3784,7 +3784,7 @@ html {
             @extend %deg-0;
           }
         }
-      } 
+      }
 
       [row="6"] {
         [col="1"] {
@@ -3810,7 +3810,7 @@ html {
           .minutes {
             @extend %deg-270;
           }
-        }    
+        }
         [col="4"] {
           .hours {
             @extend %deg-0-reverse;
@@ -3841,7 +3841,7 @@ html {
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
+          }
         }
         [col="3"] {
           .hours {
@@ -3849,17 +3849,17 @@ html {
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
-        }  
+          }
+        }
         [col="4"] {
           .hours {
             @extend %deg-180;
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
-        }      
-      } 
+          }
+        }
+      }
 
       [row="2"] {
         [col="1"] {
@@ -3876,7 +3876,7 @@ html {
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
+          }
         }
         [col="3"] {
           .hours {
@@ -3884,16 +3884,16 @@ html {
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
-        }  
+          }
+        }
         [col="4"] {
           .hours {
             @extend %deg-0;
           }
           .minutes {
             @extend %deg-180-reverse;
-          } 
-        }     
+          }
+        }
       }
 
       [row="3"] {
@@ -3903,15 +3903,15 @@ html {
           }
           .minutes {
 
-          }  
-        }   
+          }
+        }
         [col="2"] {
           .hours {
 
           }
           .minutes {
 
-          }  
+          }
         }
         [col="3"] {
           .hours {
@@ -3919,17 +3919,17 @@ html {
           }
           .minutes {
             @extend %deg-225-reverse;
-          } 
+          }
         }
         [col="4"] {
           .hours {
             @extend %deg-0;
-          }      
+          }
           .minutes {
             @extend %deg-225-reverse;
           }
-        }    
-      } 
+        }
+      }
 
       [row="4"] {
         [col="1"] {
@@ -3946,24 +3946,24 @@ html {
           }
           .minutes {
             @extend %deg-180-reverse;
-          } 
-        }  
+          }
+        }
         [col="3"] {
           .hours {
             @extend %deg-45;
           }
           .minutes {
             @extend %deg-180-reverse;
-          } 
-        }   
+          }
+        }
         [col="4"] {
           .hours {
 
           }
           .minutes {
 
-          } 
-        }    
+          }
+        }
       }
 
       [row="5"] {
@@ -3974,8 +3974,8 @@ html {
           .minutes {
 
           }
-        }    
-        [col="2"] {   
+        }
+        [col="2"] {
           .hours {
             @extend %deg-0;
           }
@@ -3998,8 +3998,8 @@ html {
           .minutes {
 
           }
-        }    
-      } 
+        }
+      }
 
       [row="6"] {
         [col="1"] {
@@ -4017,7 +4017,7 @@ html {
           .minutes {
             @extend %deg-90-reverse;
           }
-        }    
+        }
         [col="3"] {
           .hours {
             @extend %deg-0;
@@ -4033,7 +4033,7 @@ html {
           .minutes {
 
           }
-        }    
+        }
       }
 
     }
@@ -4065,7 +4065,7 @@ html {
           .minutes {
             @extend %deg-270-reverse;
           }
-        }  
+        }
         [col="4"] {
           .hours {
             @extend %deg-180;
@@ -4073,7 +4073,7 @@ html {
           .minutes {
             @extend %deg-270-reverse;
           }
-        }      
+        }
       }
 
       [row="2"] {
@@ -4100,7 +4100,7 @@ html {
           .minutes {
             @extend %deg-270;
           }
-        }  
+        }
         [col="4"] {
           .hours {
             @extend %deg-0;
@@ -4108,7 +4108,7 @@ html {
           .minutes {
             @extend %deg-180;
           }
-        }      
+        }
       }
 
       [row="3"] {
@@ -4135,7 +4135,7 @@ html {
           .minutes {
             @extend %deg-270-reverse;
           }
-        }  
+        }
         [col="4"] {
           .hours {
             @extend %deg-0;
@@ -4143,7 +4143,7 @@ html {
           .minutes {
             @extend %deg-225-reverse;
           }
-        }      
+        }
       }
 
       [row="4"] {
@@ -4170,7 +4170,7 @@ html {
           .minutes {
             @extend %deg-270-reverse;
           }
-        }   
+        }
         [col="4"] {
           .hours {
             @extend %deg-315;
@@ -4178,7 +4178,7 @@ html {
           .minutes {
             @extend %deg-180-reverse;
           }
-        }      
+        }
       }
 
       [row="5"] {
@@ -4205,7 +4205,7 @@ html {
           .minutes {
             @extend %deg-270-reverse;
           }
-        }  
+        }
         [col="4"] {
           .hours {
             @extend %deg-0;
@@ -4213,7 +4213,7 @@ html {
           .minutes {
             @extend %deg-180-reverse;
           }
-        }      
+        }
       }
 
       [row="6"] {
@@ -4240,7 +4240,7 @@ html {
           .minutes {
             @extend %deg-270-reverse;
           }
-        }  
+        }
         [col="4"] {
           .hours {
             @extend %deg-0;
@@ -4248,8 +4248,8 @@ html {
           .minutes {
             @extend %deg-270-reverse;
           }
-        }      
-      }  
+        }
+      }
 
     }
 
@@ -4271,7 +4271,7 @@ html {
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
+          }
         }
         [col="3"] {
           .hours {
@@ -4279,17 +4279,17 @@ html {
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
-        }  
+          }
+        }
         [col="4"] {
           .hours {
             @extend %deg-180;
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
-        }      
-      } 
+          }
+        }
+      }
 
       [row="2"] {
         [col="1"] {
@@ -4306,7 +4306,7 @@ html {
           }
           .minutes {
             @extend %deg-180-reverse;
-          } 
+          }
         }
         [col="3"] {
           .hours {
@@ -4314,16 +4314,16 @@ html {
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
-        }  
+          }
+        }
         [col="4"] {
           .hours {
             @extend %deg-0;
           }
           .minutes {
             @extend %deg-180-reverse;
-          } 
-        }     
+          }
+        }
       }
 
       [row="3"] {
@@ -4333,15 +4333,15 @@ html {
           }
           .minutes {
             @extend %deg-180-reverse;
-          }  
-        }   
+          }
+        }
         [col="2"] {
           .hours {
             @extend %deg-0;
           }
           .minutes {
             @extend %deg-90-reverse;
-          }  
+          }
         }
         [col="3"] {
           .hours {
@@ -4349,17 +4349,17 @@ html {
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
+          }
         }
         [col="4"] {
           .hours {
             @extend %deg-0;
-          }      
+          }
           .minutes {
             @extend %deg-180-reverse;
           }
-        }    
-      } 
+        }
+      }
 
       [row="4"] {
         [col="1"] {
@@ -4376,7 +4376,7 @@ html {
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
+          }
         }
         [col="3"] {
           .hours {
@@ -4384,16 +4384,16 @@ html {
           }
           .minutes {
             @extend %deg-270-reverse;
-          } 
-        }  
+          }
+        }
         [col="4"] {
           .hours {
             @extend %deg-0;
           }
           .minutes {
             @extend %deg-180-reverse;
-          } 
-        }      
+          }
+        }
       }
 
       [row="5"] {
@@ -4404,7 +4404,7 @@ html {
           .minutes {
             @extend %deg-180-reverse;
           }
-        }    
+        }
         [col="2"] {
           .hours {
             @extend %deg-270;
@@ -4413,7 +4413,7 @@ html {
             @extend %deg-90-reverse;
           }
         }
-        [col="3"] {   
+        [col="3"] {
           .hours {
             @extend %deg-0;
           }
@@ -4429,7 +4429,7 @@ html {
             @extend %deg-0-reverse;
           }
         }
-      } 
+      }
 
       [row="6"] {
         [col="1"] {
@@ -4455,7 +4455,7 @@ html {
           .minutes {
             @extend %deg-270-reverse;
           }
-        }    
+        }
         [col="4"] {
           .hours {
             @extend %deg-0;
@@ -4471,6 +4471,3 @@ html {
   }
 
 }
-
-
-

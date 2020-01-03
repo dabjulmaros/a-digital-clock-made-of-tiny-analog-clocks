@@ -3,6 +3,9 @@
 var darkMode=true;
 // 24 hour mode clock
 var mode24 = false;
+//reverses the minutes animation if the numbers is the same
+var reverse = false;
+
 
 
 
@@ -10,10 +13,10 @@ var mode24 = false;
 var clock = {
   el: {},
   config: {
-    n: 4,
+    n: 6,
     col: 4,
     row: 6,
-    refreshInterval: 30000
+    refreshInterval: 10000
   },
   fn: {
     domReferences: function domReferences() {
@@ -29,8 +32,11 @@ var clock = {
       var i = 0;
 
       for (var n = 1; n <= clock.config.n; n++) {
-        clockHtml += '<div class="digit" digit="' + n + '" >';
+        clockHtml += `<div class="${n>4?"letter":"digit"}" digit="${n}" >`;
         for (var row = 1; row <= clock.config.row; row++) {
+          if(row > 4 && n > 4){
+            continue;
+          }
           clockHtml += '<div class="pixel_row" row="' + row + '">';
           for (var col = 1; col <= clock.config.col; col++) {
             i++;
@@ -73,7 +79,7 @@ var clock = {
             if (str[i] !== clock.el.digits[i].getAttribute("display")) {
               clock.el.digits[i].setAttribute("display",str[i]);
             } else {
-              if ( i >= 2) {
+              if ( i >= 2 && reverse) {
                 if (clock.el.digits[i].getAttribute("reverse") != "true") {
                   console.log("Same digit at position "+ i + " ("+str[i]+")");
                   clock.el.digits[i].setAttribute("reverse","true");
